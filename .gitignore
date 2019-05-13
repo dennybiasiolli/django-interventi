@@ -1,0 +1,6 @@
+/venv/
+*.pyc
+mysite/settings.py
+db.sqlite3
+/static/
+/media/
