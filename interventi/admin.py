@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.models import User
 
 from .models import (
-    Fornitore, PuntoVendita,
+    Fornitore, Intervento, PuntoVendita,
 )
 
 
@@ -21,6 +21,27 @@ class FornitoreAdmin(admin.ModelAdmin):
     )
     search_fields = (
         'nome', 'citta', 'referente',
+    )
+
+
+class InterventoAdmin(admin.ModelAdmin):
+    """
+    Custom Intervento admin class
+    """
+    list_display = (
+        'titolo', 'punto_vendita', 'segnalatore',
+        'data_inserimento', 'data_ultima_modifica',
+    )
+    ordering = (
+        '-data_inserimento',
+    )
+    list_filter = (
+        ('punto_vendita', admin.RelatedOnlyFieldListFilter),
+        'segnalatore',
+        'data_inserimento', 'data_ultima_modifica',
+    )
+    search_fields = (
+        'titolo', 'segnalatore',
     )
 
 
@@ -49,4 +70,5 @@ class FornitoreInline(admin.TabularInline):
 
 
 admin.site.register(Fornitore, FornitoreAdmin)
+admin.site.register(Intervento, InterventoAdmin)
 admin.site.register(PuntoVendita, PuntoVenditaAdmin)

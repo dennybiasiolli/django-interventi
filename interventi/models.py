@@ -45,3 +45,23 @@ class PuntoVendita(models.Model):
 
     def __str__(self):
         return self.nome
+
+
+class Intervento(models.Model):
+    """
+    Modello contenente i dati di ogni intervento
+    """
+    punto_vendita = models.ForeignKey(
+        PuntoVendita, on_delete=models.CASCADE, related_name='interventi'
+    )
+    titolo = models.CharField(max_length=250)
+    annotazioni = models.TextField(blank=True)
+    segnalatore = models.CharField(blank=True, max_length=250)
+    data_inserimento = models.DateTimeField(auto_now_add=True)
+    data_ultima_modifica = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name_plural = 'Interventi'
+
+    def __str__(self):
+        return self.titolo
