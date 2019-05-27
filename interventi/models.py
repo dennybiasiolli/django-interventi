@@ -65,3 +65,28 @@ class Intervento(models.Model):
 
     def __str__(self):
         return self.titolo
+
+
+class InterventoAllegato(models.Model):
+    """
+    Modello relativo a un allegato della tabella interventi
+    """
+    intervento = models.ForeignKey(
+        Intervento, on_delete=models.CASCADE, related_name='allegati',
+    )
+    file = models.FileField(
+        upload_to='interventiAllegati/%Y/%m/%d/',
+    )
+    data_inserimento = models.DateTimeField(auto_now_add=True)
+
+    def file_name(self):
+        return self.file.name.split("/")[-1]
+
+    def file_size_kb(self):
+        return int(self.file.size/1024)
+
+    class Meta:
+        verbose_name_plural = 'InterventiAllegati'
+
+    def __str__(self):
+        return f'{self.file.name} ({self.file_size_kb()} KB)'
