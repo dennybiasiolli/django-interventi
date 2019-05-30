@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 
 from .models import (
     Fornitore, Intervento, InterventoAllegato, PuntoVendita,
+    StatoInterventoCliente, StatoInterventoInterno,
 )
 
 
@@ -99,13 +100,25 @@ class PuntoVenditaAdmin(admin.ModelAdmin):
     )
 
 
-class FornitoreInline(admin.TabularInline):
-    model = Fornitore
-    # can_delete = True
-    verbose_name_plural = 'fornitori'
+class StatoInterventoClienteAdmin(admin.ModelAdmin):
+    """
+    Custom StatoInterventoCliente admin class
+    """
+    ordering = ('ordine', 'descrizione')
+    search_fields = ('descrizione',)
+
+
+class StatoInterventoInternoAdmin(admin.ModelAdmin):
+    """
+    Custom StatoInterventoInterno admin class
+    """
+    ordering = ('ordine', 'descrizione')
+    search_fields = ('descrizione',)
 
 
 admin.site.register(Fornitore, FornitoreAdmin)
 admin.site.register(Intervento, InterventoAdmin)
 admin.site.register(InterventoAllegato, InterventoAllegatoAdmin)
 admin.site.register(PuntoVendita, PuntoVenditaAdmin)
+admin.site.register(StatoInterventoCliente, StatoInterventoClienteAdmin)
+admin.site.register(StatoInterventoInterno, StatoInterventoInternoAdmin)
