@@ -47,6 +47,28 @@ class PuntoVendita(models.Model):
         return self.nome
 
 
+class StatoInterventoCliente(models.Model):
+    descrizione = models.CharField(max_length=250)
+    ordine = models.IntegerField(default=0)
+
+    class Meta:
+        verbose_name_plural = 'StatiInterventoCliente'
+
+    def __str__(self):
+        return f'{self.ordine} - {self.descrizione}'
+
+
+class StatoInterventoInterno(models.Model):
+    descrizione = models.CharField(max_length=250)
+    ordine = models.IntegerField(default=0)
+
+    class Meta:
+        verbose_name_plural = 'StatiInterventoInterno'
+
+    def __str__(self):
+        return f'{self.ordine} - {self.descrizione}'
+
+
 class Intervento(models.Model):
     """
     Modello contenente i dati di ogni intervento
