@@ -81,6 +81,14 @@ class Intervento(models.Model):
     segnalatore = models.CharField(blank=True, max_length=250)
     data_inserimento = models.DateTimeField(auto_now_add=True)
     data_ultima_modifica = models.DateTimeField(auto_now=True)
+    stato_cliente = models.ForeignKey(
+        StatoInterventoCliente, on_delete=models.CASCADE,
+        related_name='interventi', default=1
+    )
+    stato_interno = models.ForeignKey(
+        StatoInterventoInterno, on_delete=models.CASCADE,
+        related_name='interventi', default=1
+    )
 
     class Meta:
         verbose_name_plural = 'Interventi'
