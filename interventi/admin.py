@@ -41,14 +41,17 @@ class InterventoAdmin(admin.ModelAdmin):
     list_display = (
         'titolo', 'punto_vendita', 'segnalatore',
         'data_inserimento', 'data_ultima_modifica',
+        'stato_cliente', 'stato_interno',
     )
     ordering = (
         '-data_inserimento',
     )
     list_filter = (
         ('punto_vendita', admin.RelatedOnlyFieldListFilter),
-        'segnalatore',
+        ('stato_cliente', admin.RelatedOnlyFieldListFilter),
+        ('stato_interno', admin.RelatedOnlyFieldListFilter),
         'data_inserimento', 'data_ultima_modifica',
+        'segnalatore',
     )
     search_fields = (
         'titolo', 'segnalatore',
