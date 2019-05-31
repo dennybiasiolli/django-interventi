@@ -77,6 +77,7 @@ class Intervento(models.Model):
         PuntoVendita, on_delete=models.CASCADE, related_name='interventi'
     )
     titolo = models.CharField(max_length=250)
+    urgente = models.BooleanField(default=False)
     annotazioni = models.TextField(blank=True)
     segnalatore = models.CharField(blank=True, max_length=250)
     data_inserimento = models.DateTimeField(auto_now_add=True)
