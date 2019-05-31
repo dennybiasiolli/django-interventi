@@ -31,3 +31,24 @@ A sample project using Django, django-rest-framework and related packages.
 - Run the instance
 
     `python manage.py runserver`
+
+
+#### Deploying to heroku
+
+1. Configuring `DJANGO_SETTINGS_MODULE` for heroku
+
+    `heroku config:set DJANGO_SETTINGS_MODULE=mysite.settings_heroku`
+
+2. Pushing `heroku` branch to `heroku/master` branch
+
+    ```sh
+    git checkout heroku
+    git rebase master
+    git push heroku heroku:master
+    ```
+
+3. Migrating heroku database
+
+    ```sh
+    heroku run python manage.py migrate
+    ```
