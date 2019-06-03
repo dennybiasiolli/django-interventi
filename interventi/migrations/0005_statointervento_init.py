@@ -53,9 +53,13 @@ def reverse_func(apps, schema_editor):
     stato_intervento_cliente_model = apps.get_model(
         'interventi', 'StatoInterventoCliente'
     )
+    stato_intervento_interno_model = apps.get_model(
+        'interventi', 'StatoInterventoInterno'
+    )
     db_alias = schema_editor.connection.alias
 
     stato_intervento_cliente_model.objects.using(db_alias).all().delete()
+    stato_intervento_interno_model.objects.using(db_alias).all().delete()
 
 
 class Migration(migrations.Migration):
