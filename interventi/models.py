@@ -87,6 +87,10 @@ class Intervento(models.Model):
     punto_vendita = models.ForeignKey(
         PuntoVendita, on_delete=models.CASCADE, related_name='interventi'
     )
+    tipo_intervento = models.ForeignKey(
+        TipoIntervento, on_delete=models.CASCADE, related_name='interventi',
+        default=1
+    )
     titolo = models.CharField(max_length=250)
     urgente = models.BooleanField(default=False)
     annotazioni = models.TextField(blank=True)
