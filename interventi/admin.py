@@ -121,16 +121,16 @@ class PuntoVenditaAdmin(admin.ModelAdmin):
     Custom PuntoVendita admin class
     """
     list_display = (
-        'nome', 'citta', 'responsabile', 'email', 'telefono',
+        'nome', 'citta', 'regione', 'responsabile', 'email', 'telefono',
     )
     ordering = (
         'nome',
     )
     list_filter = (
-        'citta', 'responsabile',
+        'regione', 'citta', 'responsabile',
     )
     search_fields = (
-        'nome', 'citta', 'responsabile',
+        'nome', 'regione', 'citta', 'responsabile',
     )
 
 
