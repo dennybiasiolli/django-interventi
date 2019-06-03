@@ -29,6 +29,7 @@ class PuntoVendita(models.Model):
     nome = models.CharField(max_length=250)
     indirizzo = models.CharField(blank=True, max_length=250)
     citta = models.CharField(blank=True, max_length=200)
+    regione = models.CharField(blank=True, max_length=200)
     responsabile = models.CharField(blank=True, max_length=200)
     email = models.EmailField(blank=True, max_length=200)
     telefono = models.CharField(blank=True, max_length=200)
