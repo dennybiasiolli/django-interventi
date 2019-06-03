@@ -64,7 +64,7 @@ class InterventoAdmin(admin.ModelAdmin):
         'data_inserimento', 'data_ultima_modifica',
     )
     list_display = (
-        'titolo', 'urgente', 'punto_vendita', 'segnalatore',
+        'titolo', 'tipo_intervento', 'urgente', 'punto_vendita', 'segnalatore',
         'data_inserimento', 'data_ultima_modifica',
         'stato_cliente', 'stato_interno',
     )
@@ -72,6 +72,7 @@ class InterventoAdmin(admin.ModelAdmin):
         '-urgente', '-data_inserimento',
     )
     list_filter = (
+        ('tipo_intervento', admin.RelatedOnlyFieldListFilter),
         'urgente',
         ('punto_vendita', admin.RelatedOnlyFieldListFilter),
         ('stato_cliente', admin.RelatedOnlyFieldListFilter),
