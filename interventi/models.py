@@ -69,6 +69,17 @@ class StatoInterventoInterno(models.Model):
         return f'{self.ordine} - {self.descrizione}'
 
 
+class TipoIntervento(models.Model):
+    descrizione = models.CharField(max_length=250)
+    ordine = models.IntegerField(default=0)
+
+    class Meta:
+        verbose_name_plural = 'TipiIntervento'
+
+    def __str__(self):
+        return self.descrizione
+
+
 class Intervento(models.Model):
     """
     Modello contenente i dati di ogni intervento

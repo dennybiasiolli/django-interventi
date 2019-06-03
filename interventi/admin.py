@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from .models import (
     Fornitore, Intervento, InterventoAllegato, PuntoVendita,
     Preventivo, PreventivoAllegato,
-    StatoInterventoCliente, StatoInterventoInterno,
+    StatoInterventoCliente, StatoInterventoInterno, TipoIntervento,
 )
 
 
@@ -149,6 +149,14 @@ class StatoInterventoInternoAdmin(admin.ModelAdmin):
     search_fields = ('descrizione',)
 
 
+class TipoInterventoAdmin(admin.ModelAdmin):
+    """
+    Custom TipoInterventoCliente admin class
+    """
+    ordering = ('ordine', 'descrizione')
+    search_fields = ('descrizione',)
+
+
 admin.site.register(Fornitore, FornitoreAdmin)
 admin.site.register(Intervento, InterventoAdmin)
 admin.site.register(InterventoAllegato, InterventoAllegatoAdmin)
@@ -156,3 +164,4 @@ admin.site.register(Preventivo, PreventivoAdmin)
 admin.site.register(PuntoVendita, PuntoVenditaAdmin)
 admin.site.register(StatoInterventoCliente, StatoInterventoClienteAdmin)
 admin.site.register(StatoInterventoInterno, StatoInterventoInternoAdmin)
+admin.site.register(TipoIntervento, TipoInterventoAdmin)
