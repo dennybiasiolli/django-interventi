@@ -121,3 +121,50 @@ class InterventoAllegato(models.Model):
 
     def __str__(self):
         return f'{self.file.name} ({self.file_size_kb()} KB)'
+
+
+class Preventivo(models.Model):
+    """
+    Modello relativo ai preventivi di ogni intervento
+    """
+    intervento = models.ForeignKey(
+        Intervento, related_name='preventivi', on_delete=models.CASCADE,
+    )
+    fornitore = models.ForeignKey(
+        Fornitore, related_name='preventivi', on_delete=models.CASCADE
+    )
+    numero = models.CharField(max_length=50)
+    is_confermato = models.BooleanField(default=False)
+    data_inizio_lavori = models.DateField(blank=True, null=True)
+    data_fine_lavori = models.DateField(blank=True, null=True)
+    importo = models.DecimalField(
+        blank=True, null=True,
+        max_digits=15, decimal_places=2,
+    )
+    annotazioni = models.TextField(blank=True, null=True)
+    data_inserimento = models.DateTimeField(auto_now_add=True)
+    data_ultima_modifica = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name_plural = 'Preventivi'
+
+    def __str__(self):
+        return f'{self.numero} --> {self.fornitore.nome}'
+
+
+class PreventivoAllegato(models.Model):
+    """
+    Modello relativo a un allegato della tabella preventivi
+    """
+    file = models.FileField(
+        upload_to='preventivi/%Y/%m/%d/',
+    )
+    preventivo = models.ForeignKey(
+        Preventivo, related_name='allegati', on_delete=models.CASCADE,
+    )
+
+    class Meta:
+        verbose_name_plural = 'PreventivoAllegati'
+
+    def __str__(self):
+        return f'{self.file.name} ({int(self.file.size/1024)} KB)'
