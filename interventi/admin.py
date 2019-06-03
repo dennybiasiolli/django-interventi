@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 
 from .models import (
     Fornitore, Intervento, InterventoAllegato, PuntoVendita,
+    Preventivo, PreventivoAllegato,
     StatoInterventoCliente, StatoInterventoInterno,
 )
 
@@ -10,6 +11,27 @@ from .models import (
 class InterventoAllegatoInline(admin.TabularInline):
     model = InterventoAllegato
     verbose_name_plural = 'File Allegati'
+    extra = 0
+
+
+class PreventivoInline(admin.TabularInline):
+    model = Preventivo
+    verbose_name_plural = 'preventivi'
+    extra = 0
+    show_change_link = True
+    fieldsets = (
+        (None, {
+            'fields': (
+                'fornitore', 'numero', 'is_confermato', 'importo',
+                'data_inizio_lavori', 'data_fine_lavori',
+            )
+        }),
+    )
+
+
+class PreventivoAllegatoInline(admin.TabularInline):
+    model = PreventivoAllegato
+    verbose_name_plural = 'allegati'
     extra = 0
 
 
@@ -36,7 +58,10 @@ class InterventoAdmin(admin.ModelAdmin):
     Custom Intervento admin class
     """
     inlines = (
-        InterventoAllegatoInline,
+        InterventoAllegatoInline, PreventivoInline,
+    )
+    readonly_fields = (
+        'data_inserimento', 'data_ultima_modifica',
     )
     list_display = (
         'titolo', 'urgente', 'punto_vendita', 'segnalatore',
@@ -86,6 +111,10 @@ class InterventoAllegatoAdmin(admin.ModelAdmin):
         return obj.intervento.punto_vendita
 
 
+class PreventivoAdmin(admin.ModelAdmin):
+    inlines = (PreventivoAllegatoInline,)
+
+
 class PuntoVenditaAdmin(admin.ModelAdmin):
     """
     Custom PuntoVendita admin class
@@ -123,6 +152,7 @@ class StatoInterventoInternoAdmin(admin.ModelAdmin):
 admin.site.register(Fornitore, FornitoreAdmin)
 admin.site.register(Intervento, InterventoAdmin)
 admin.site.register(InterventoAllegato, InterventoAllegatoAdmin)
+admin.site.register(Preventivo, PreventivoAdmin)
 admin.site.register(PuntoVendita, PuntoVenditaAdmin)
 admin.site.register(StatoInterventoCliente, StatoInterventoClienteAdmin)
 admin.site.register(StatoInterventoInterno, StatoInterventoInternoAdmin)
