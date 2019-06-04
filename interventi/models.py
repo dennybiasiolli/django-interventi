@@ -139,6 +139,23 @@ class InterventoAllegato(models.Model):
         return f'{self.file.name} ({self.file_size_kb()} KB)'
 
 
+class InterventoCommento(models.Model):
+    intervento = models.ForeignKey(
+        Intervento, on_delete=models.CASCADE, related_name='commenti',
+    )
+    utente = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='commenti',
+    )
+    testo = models.TextField()
+    data_inserimento = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name_plural = 'InterventiCommenti'
+
+    def __str__(self):
+        return f'{self.data_inserimento} - {self.utente}'
+
+
 class Preventivo(models.Model):
     """
     Modello relativo ai preventivi di ogni intervento

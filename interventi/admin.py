@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.models import User
 
 from .models import (
-    Fornitore, Intervento, InterventoAllegato, PuntoVendita,
+    Fornitore, Intervento, InterventoAllegato, InterventoCommento, PuntoVendita,
     Preventivo, PreventivoAllegato,
     StatoInterventoCliente, StatoInterventoInterno, TipoIntervento,
 )
@@ -11,6 +11,12 @@ from .models import (
 class InterventoAllegatoInline(admin.TabularInline):
     model = InterventoAllegato
     verbose_name_plural = 'File Allegati'
+    extra = 0
+
+
+class InterventoCommentoInline(admin.TabularInline):
+    model = InterventoCommento
+    verbose_name_plural = 'Commenti'
     extra = 0
 
 
@@ -58,7 +64,7 @@ class InterventoAdmin(admin.ModelAdmin):
     Custom Intervento admin class
     """
     inlines = (
-        InterventoAllegatoInline, PreventivoInline,
+        InterventoAllegatoInline, PreventivoInline, InterventoCommentoInline,
     )
     readonly_fields = (
         'data_inserimento', 'data_ultima_modifica',
@@ -103,6 +109,33 @@ class InterventoAllegatoAdmin(admin.ModelAdmin):
     )
     search_fields = (
         'file',
+    )
+
+    def titolo_intervento(self, obj):
+        return obj.intervento.titolo
+
+    def punto_vendita_intervento(self, obj):
+        return obj.intervento.punto_vendita
+
+
+class InterventoCommentoAdmin(admin.ModelAdmin):
+    """
+    Custom InterventoCommento admin class
+    """
+    list_display = (
+        'data_inserimento', 'utente',
+        'titolo_intervento', 'punto_vendita_intervento',
+    )
+    ordering = (
+        '-data_inserimento',
+    )
+    list_filter = (
+        'data_inserimento',
+        ('intervento__punto_vendita', admin.RelatedOnlyFieldListFilter),
+        ('intervento', admin.RelatedOnlyFieldListFilter),
+    )
+    search_fields = (
+        'testo',
     )
 
     def titolo_intervento(self, obj):
@@ -161,6 +194,7 @@ class TipoInterventoAdmin(admin.ModelAdmin):
 admin.site.register(Fornitore, FornitoreAdmin)
 admin.site.register(Intervento, InterventoAdmin)
 admin.site.register(InterventoAllegato, InterventoAllegatoAdmin)
+admin.site.register(InterventoCommento, InterventoCommentoAdmin)
 admin.site.register(Preventivo, PreventivoAdmin)
 admin.site.register(PuntoVendita, PuntoVenditaAdmin)
 admin.site.register(StatoInterventoCliente, StatoInterventoClienteAdmin)
