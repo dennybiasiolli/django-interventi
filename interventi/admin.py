@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 from .models import (
     Fornitore, Intervento, InterventoAllegato, InterventoCommento, PuntoVendita,
-    Preventivo, PreventivoAllegato,
+    Preventivo, PreventivoAllegato, Scadenza, ScadenzaAllegato,
     StatoInterventoCliente, StatoInterventoInterno, TipoIntervento,
 )
 
@@ -37,6 +37,12 @@ class PreventivoInline(admin.TabularInline):
 
 class PreventivoAllegatoInline(admin.TabularInline):
     model = PreventivoAllegato
+    verbose_name_plural = 'allegati'
+    extra = 0
+
+
+class ScadenzaAllegatoInline(admin.TabularInline):
+    model = ScadenzaAllegato
     verbose_name_plural = 'allegati'
     extra = 0
 
@@ -167,6 +173,29 @@ class PuntoVenditaAdmin(admin.ModelAdmin):
     )
 
 
+class ScadenzaAdmin(admin.ModelAdmin):
+    """
+    Custom Scadenza admin class
+    """
+    inlines = (ScadenzaAllegatoInline,)
+    list_display = (
+        'descrizione', 'data_scadenza', 'gestita',
+        'punto_vendita', 'fornitore',
+    )
+    ordering = (
+        'gestita', 'data_scadenza',
+    )
+    list_filter = (
+        'gestita',
+        'data_scadenza',
+        ('punto_vendita', admin.RelatedOnlyFieldListFilter),
+        ('fornitore', admin.RelatedOnlyFieldListFilter),
+    )
+    search_fields = (
+        'descrizione', 'annotazioni',
+    )
+
+
 class StatoInterventoClienteAdmin(admin.ModelAdmin):
     """
     Custom StatoInterventoCliente admin class
@@ -197,6 +226,7 @@ admin.site.register(InterventoAllegato, InterventoAllegatoAdmin)
 admin.site.register(InterventoCommento, InterventoCommentoAdmin)
 admin.site.register(Preventivo, PreventivoAdmin)
 admin.site.register(PuntoVendita, PuntoVenditaAdmin)
+admin.site.register(Scadenza, ScadenzaAdmin)
 admin.site.register(StatoInterventoCliente, StatoInterventoClienteAdmin)
 admin.site.register(StatoInterventoInterno, StatoInterventoInternoAdmin)
 admin.site.register(TipoIntervento, TipoInterventoAdmin)
