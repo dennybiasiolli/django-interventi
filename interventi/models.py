@@ -201,3 +201,46 @@ class PreventivoAllegato(models.Model):
 
     def __str__(self):
         return f'{self.file.name} ({int(self.file.size/1024)} KB)'
+
+
+class Scadenza(models.Model):
+    """
+    Modello relativo a una scadenza
+    """
+    data_scadenza = models.DateField()
+    data_promemoria = models.DateField()
+    descrizione = models.CharField(max_length=250)
+    punto_vendita = models.ForeignKey(
+        PuntoVendita, blank=True, null=True, on_delete=models.CASCADE,
+        related_name='scadenze',
+    )
+    fornitore = models.ForeignKey(
+        Fornitore, blank=True, null=True, on_delete=models.CASCADE,
+        related_name='scadenze',
+    )
+    gestita = models.BooleanField()
+    annotazioni = models.TextField(blank=True)
+
+    class Meta:
+        verbose_name_plural = 'Scadenze'
+
+    def __str__(self):
+        return f'{self.data_scadenza} - {self.descrizione}'
+
+
+class ScadenzaAllegato(models.Model):
+    """
+    Modello relativo a un allegato della tabella preventivi
+    """
+    file = models.FileField(
+        upload_to='scadenze/%Y/%m/%d/',
+    )
+    scadenza = models.ForeignKey(
+        Scadenza, related_name='allegati', on_delete=models.CASCADE,
+    )
+
+    class Meta:
+        verbose_name_plural = 'ScadenzeAllegati'
+
+    def __str__(self):
+        return f'{self.file.name} ({int(self.file.size/1024)} KB)'
