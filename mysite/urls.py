@@ -22,13 +22,13 @@ from rest_framework.authtoken import views
 from rest_framework_simplejwt.views import (TokenRefreshView, TokenVerifyView)
 from rest_framework_swagger.views import get_swagger_view
 
-from interventi.urls import router as interventi_router
+from interventi.urls import ROUTER as interventi_router
 from .views import MyTokenObtainPairView, UserInfoViewSet
 
 
-router = routers.DefaultRouter()
-router.registry.extend(interventi_router.registry)
-router.register(r'user-info', UserInfoViewSet)
+ROUTER = routers.DefaultRouter()
+ROUTER.registry.extend(interventi_router.registry)
+ROUTER.register(r'user-info', UserInfoViewSet)
 
 
 urlpatterns = [
@@ -39,7 +39,7 @@ urlpatterns = [
     path('token/', MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('token/verify/', TokenVerifyView.as_view(), name='token_verify'),
-    path('', include(router.urls)),
+    path('', include(ROUTER.urls)),
 ]
 
 if settings.DEBUG:
