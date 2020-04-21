@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'django_filters',
-    'rest_framework_swagger',
     'interventi',
 ]
 
@@ -159,8 +158,3 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-
-# Swagger configuration
-LOGIN_URL = 'rest_framework:login'
-LOGOUT_URL = 'rest_framework:logout'
