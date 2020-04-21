@@ -20,7 +20,6 @@ from django.urls import include, path
 from rest_framework import routers
 from rest_framework.authtoken import views
 from rest_framework_simplejwt.views import (TokenRefreshView, TokenVerifyView)
-from rest_framework_swagger.views import get_swagger_view
 
 from interventi.urls import ROUTER as interventi_router
 from .views import MyTokenObtainPairView, UserInfoViewSet
@@ -35,7 +34,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
     path('api-token-auth/', views.obtain_auth_token),
-    path('docs/', get_swagger_view(title='SKITE API')),
     path('token/', MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('token/verify/', TokenVerifyView.as_view(), name='token_verify'),
