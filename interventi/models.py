@@ -203,6 +203,23 @@ class PreventivoAllegato(models.Model):
         return f'{self.file.name} ({int(self.file.size/1024)} KB)'
 
 
+class PreventivoCommento(models.Model):
+    preventivo = models.ForeignKey(
+        Preventivo, on_delete=models.CASCADE, related_name='commenti',
+    )
+    utente = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='commenti_preventivi',
+    )
+    testo = models.TextField()
+    data_inserimento = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name_plural = 'PreventiviCommenti'
+
+    def __str__(self):
+        return f'{self.data_inserimento} - {self.utente}'
+
+
 class Scadenza(models.Model):
     """
     Modello relativo a una scadenza
