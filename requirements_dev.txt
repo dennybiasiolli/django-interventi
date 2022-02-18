@@ -1,4 +1,4 @@
 -r requirements.txt
 autopep8==1.6.0
 pylint==2.12.2
-pylint-django==2.5.0
+pylint-django==2.5.2
