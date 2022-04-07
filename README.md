@@ -3,11 +3,6 @@
 A sample project using Django, django-rest-framework and related packages.
 
 
-[![Updates](https://pyup.io/repos/github/dennybiasiolli/django-interventi/shield.svg)](https://pyup.io/repos/github/dennybiasiolli/django-interventi/)
-
-[ ~ Dependencies scanned by PyUp.io ~ ]
-
-
 #### Run
 
 - Clone the project
